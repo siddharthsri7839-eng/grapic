@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Multimedia & Graphics – BCA Sem 5 Study App</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--tx:#1b1f2a;--mu:#5d6475;--ac:#4f46e5;--ac2:#eef0ff;--bd:#e2e5ee;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10131a;--card:#1a1f2b;--tx:#e8eaf2;--mu:#9aa2b5;--ac:#8b93ff;--ac2:#232a42;--bd:#2b3245}}
+:root[data-theme="dark"]{--bg:#10131a;--card:#1a1f2b;--tx:#e8eaf2;--mu:#9aa2b5;--ac:#8b93ff;--ac2:#232a42;--bd:#2b3245}
+*{box-sizing:border-box}html{scroll-padding-top:120px}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+header{position:sticky;top:env(safe-area-inset-top,0px);background:var(--card);border-bottom:1px solid var(--bd);padding:10px 14px;z-index:5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--card);z-index:10}
+h1{font-size:17px;margin:0 0 8px}
+input[type=search]{width:100%;padding:11px 14px;border-radius:12px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);font-size:16px}
+main{padding:12px 14px;max-width:760px;margin:auto}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 10px}
+.chip{flex:none;padding:7px 14px;border-radius:20px;border:1px solid var(--bd);background:var(--card);color:var(--tx);font-size:14px}
+.chip.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+details{background:var(--card);border:1px solid var(--bd);border-radius:14px;margin:0 0 10px;overflow:hidden}
+summary{padding:13px 14px;cursor:pointer;font-weight:600;list-style:none;display:flex;gap:10px;align-items:flex-start}
+summary::-webkit-details-marker{display:none}
+.m{flex:none;background:var(--ac2);color:var(--ac);border-radius:8px;padding:1px 8px;font-size:13px;font-weight:700}
+.b{padding:0 14px 14px;color:var(--tx)}
+.b p{margin:6px 0}.b ul{margin:6px 0;padding-left:20px}
+table{border-collapse:collapse;width:100%;font-size:14px;margin:6px 0;display:block;overflow-x:auto}
+td,th{border:1px solid var(--bd);padding:6px 8px;text-align:left}th{background:var(--ac2)}
+code,pre{background:var(--ac2);border-radius:6px;padding:1px 5px;font-size:14px}
+pre{padding:8px;overflow-x:auto;white-space:pre}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--card);border-top:1px solid var(--bd);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px));z-index:6}
+nav button{flex:1;border:0;background:none;color:var(--mu);font-size:12px;padding:6px 0;display:flex;flex-direction:column;align-items:center;gap:2px}
+nav button span{font-size:20px}nav button.on{color:var(--ac);font-weight:700}
+h2{font-size:16px;margin:14px 0 8px;color:var(--ac)}
+.note{font-size:13px;color:var(--mu);margin:4px 0 12px}
+.done{opacity:.55}
+</style></head><body>
+<header><h1>📘 Multimedia & Graphics · BCA Sem 5</h1><input type="search" id="q" placeholder="Search any question or topic…"></header>
+<main id="v"></main>
+<nav id="nav"></nav>
+<script>
+const QA=[
+["g1",15,"U1","What is Computer Graphics? Explain advantages, uses, hardware and software.",`<p>Computer Graphics is creating, storing, editing and displaying pictures and animations using a computer.</p><b>Advantages:</b><ul><li>Easy understanding through pictures</li><li>Immediate feedback and easy editing</li><li>Accurate, saves time, supports animation</li></ul><b>Uses:</b> education, medical (CT/MRI), CAD, games and movies, business charts, architecture.<br><b>Hardware:</b> input (keyboard, mouse, joystick, light pen, scanner), processing (CPU, GPU), output (monitor, printer, plotter), storage (HDD, SSD).<br><b>Software:</b> Photoshop, CorelDRAW, Blender, AutoCAD, Dreamweaver.<br><b>Conceptual framework:</b> Application model → Application program → Graphics system (display) with user input going back to the program.`],
+["g2",15,"U1","Explain DDA and Bresenham line drawing algorithms with examples.",`<b>DDA:</b> dx=x2−x1, dy=y2−y1, Steps=max(|dx|,|dy|), Xinc=dx/Steps, Yinc=dy/Steps. Add increments each step and plot the rounded point.<br>Example (2,2)→(8,5): Steps=6, Xinc=1, Yinc=0.5 → (2,2),(3,3),(4,3),(5,4),(6,4),(7,5),(8,5).<br><b>Bresenham (0&lt;m&lt;1):</b> p0=2dy−dx. If p&lt;0 → (x+1,y), p+=2dy. Else → (x+1,y+1), p+=2dy−2dx.<br>Example (2,2)→(8,5): dx=6, dy=3, p0=0 → (3,3) p=−6 → (4,3) p=0 → (5,4) p=−6 → (6,4) p=0 → (7,5) p=−6 → (8,5).<table><tr><th>DDA</th><th>Bresenham</th></tr><tr><td>Floating point</td><td>Integer only</td></tr><tr><td>Slower</td><td>Faster</td></tr><tr><td>Rounding error</td><td>More accurate</td></tr></table>`],
+["g3",15,"U1","Explain midpoint circle and midpoint ellipse algorithms.",`<b>Circle:</b> x²+y²=r², 8-way symmetry. Start x=0, y=r, p=1−r. Plot 8 points. If p&lt;0: x++, p+=2x+1. Else: x++, y−−, p+=2x−2y+1. Repeat while x&lt;y.<br>Example r=5: p0=−4 → (1,5) → (2,5) → (3,4) → (4,3) stop.<br><b>Ellipse:</b> x²/rx²+y²/ry²=1, 4-way symmetry, two regions.<br>Region 1 (slope&lt;1, step x): p1=ry²−rx²ry+¼rx².<br>Region 2 (slope&gt;1, step y): p2=ry²(x+½)²+rx²(y−1)²−rx²ry².`],
+["g4",15,"U2","Explain raster-scan display, video controller and random-scan display.",`<b>Raster scan:</b> screen is a grid of pixels, beam scans row by row (left→right, top→bottom), image kept in the <b>frame buffer</b>. Good for realistic images.<br><b>Video controller:</b> reads frame buffer, makes display signals and sync pulses, controls refresh.<br><b>Random scan:</b> beam draws only needed lines using a <b>display list</b>; display processor reads it. Smooth lines, no realistic shading.<table><tr><th>Raster</th><th>Random</th></tr><tr><td>Pixels</td><td>Lines</td></tr><tr><td>Frame buffer</td><td>Display list</td></tr><tr><td>Realistic images</td><td>Line drawings</td></tr><tr><td>Jagged lines</td><td>Smooth lines</td></tr></table>`],
+["g5",15,"U3","What is clipping? Explain the Cohen-Sutherland algorithm.",`Clipping removes parts of a picture outside the window. Types: point, line, polygon, curve, text.<br>Each endpoint gets a 4-bit code <b>TBRL</b> (1 = outside on that side).<pre>1001|1000|1010\n0001|0000|0010\n0101|0100|0110</pre><ol><li>Both codes 0000 → accept.</li><li>code1 AND code2 ≠ 0 → reject.</li><li>Else find intersection with an edge (y=y1+m(x−x1) or x=x1+(y−y1)/m), replace the outside point and repeat.</li></ol>Example: window (0,0)-(10,10), line (−5,5)→(5,5) clips to (0,5)→(5,5).`],
+["g6",15,"U3","Explain 2D transformations with matrices, homogeneous coordinates and composite transformations.",`Homogeneous coordinates write (x,y) as (x,y,1) so every transformation is a matrix multiplication.<pre>Translation   Scaling       Rotation\n|1 0 tx|      |sx 0 0|     |cos -sin 0|\n|0 1 ty|      |0 sy 0|     |sin  cos 0|\n|0 0 1 |      |0 0  1|     |0    0   1|</pre>Translation: x'=x+tx, y'=y+ty. Scaling: x'=x·sx, y'=y·sy. Rotation: x'=x cosθ−y sinθ, y'=x sinθ+y cosθ. Reflection: mirror image (x-axis: y'=−y). Shearing: slant (x'=x+shx·y).<br><b>Composite:</b> multiply matrices M=M3×M2×M1; order matters (not commutative). Rotation about (xp,yp): translate(−xp,−yp) → rotate → translate(xp,yp).<br>Example: A(1,1),B(3,1),C(2,3) translated by (2,3) → (3,4),(5,4),(4,6).`],
+["g7",15,"U4","Explain parametric and non-parametric curves, cubic splines, Bezier and B-spline curves.",`<b>Non-parametric:</b> y=f(x) or f(x,y)=0 (e.g. y=x²). <b>Parametric:</b> x=x(t), y=y(t) (circle: x=r cos t, y=r sin t); handles closed curves and vertical tangents.<br><b>Cubic spline:</b> cubic pieces joined smoothly (C² continuity), passes through the points.<br><b>Bezier:</b> P(t)=(1−t)³P0+3t(1−t)²P1+3t²(1−t)P2+t³P3, 0≤t≤1. Passes through first and last point only, stays in convex hull, global control.<br><b>B-spline:</b> control points + basis functions, local control, degree chosen independently, better for complex shapes.`],
+["g8",15,"U4","Explain parametric, revolution, sweep, quadric, bilinear, Bezier and B-spline surfaces, generalized cylinders and cones, polygon mesh and wireframe.",`<ul><li><b>Parametric surface:</b> P(u,v)=(x(u,v),y(u,v),z(u,v)).</li><li><b>Revolution:</b> curve rotated about an axis (vase, bowl).</li><li><b>Sweep:</b> curve moved along a path (pipe).</li><li><b>Quadric:</b> second-degree equation (sphere, ellipsoid, cone, cylinder).</li><li><b>Bilinear:</b> P(u,v)=(1−u)(1−v)P00+(1−u)vP01+u(1−v)P10+uvP11.</li><li><b>Bezier / B-spline surface:</b> grid of control points; used in car and aircraft bodies.</li><li><b>Generalized cylinder:</b> cross-section moved along a curve; <b>cone:</b> cross-section shrinks to an apex.</li><li><b>Polygon mesh:</b> vertices+edges+faces. <b>Wireframe:</b> vertices+edges only.</li></ul>`],
+["g9",15,"U5","What is multimedia? Explain elements, objects, hardware, software and applications.",`Multimedia = text + graphics + audio + video + animation, delivered interactively by computer.<br><b>Uses in business and work:</b> presentations, training, advertising, e-commerce, video conferencing.<br><b>Convergence:</b> computer + communication + entertainment merge (smartphone).<br><b>Hardware:</b> CPU, RAM, graphics and sound card, microphone, camera, scanner, monitor, speakers; storage (HDD, SSD, CD/DVD, pen drive, memory card); communication devices (modem, network card).<br><b>Software:</b> PowerPoint, Photoshop, Premiere Pro, Audacity, Blender.`],
+["g10",15,"U5","Explain authoring tools: card-based and page-based, presentation tools and object generation tools.",`Authoring tools combine text, images, sound and video into an interactive application.<ul><li><b>Card-based:</b> stack of cards with buttons (HyperCard).</li><li><b>Page-based:</b> book of pages with objects and links (ToolBook, Dreamweaver).</li><li><b>Icon-based:</b> icons on a flow chart (Authorware).</li><li><b>Time-based:</b> timeline (Director, Flash).</li></ul>Presentation tools: PowerPoint, Google Slides, Prezi. Object generation: Photoshop (image), Premiere (video), Audacity (sound), Blender (3D).`],
+["g11",15,"U5","Explain digital audio, MIDI, audio file formats, MIDI under Windows and audio/video capture.",`<b>Digital audio:</b> sampling (measure at regular intervals, CD = 44.1 kHz) → quantization (round to levels, 8/16 bit) → encoding (binary). Size = rate × bits × channels × time.<br><b>MIDI:</b> standard to connect instruments and computers; stores notes, timing, instrument, not sound; very small files.<br><b>Formats:</b> WAV (uncompressed), MP3 (lossy), AAC (lossy), FLAC (lossless), MID (instructions).<br><b>Windows:</b> sound card synthesizer, MIDI mapper, Media Player, Sound Recorder, MIDI API.<br><b>Capture:</b> microphone/camera → ADC/capture card → compression → editing → storage.`],
+["t1",10,"U1","Advantages of interactive graphics.",`User-friendly, immediate feedback, easy editing, saves time, better accuracy and visualization, real-time interaction. Used in games, CAD, simulation. Example: moving a wall in AutoCAD with a mouse.`],
+["t2",10,"U1","Representative uses of computer graphics.",`User interfaces, CAD/CAM, charts and graphs, medical imaging, simulation and training, entertainment, education, art and design.`],
+["t3",10,"U1","Explain DDA algorithm with example.",`Steps: dx, dy → Steps=max(|dx|,|dy|) → Xinc, Yinc → plot rounded points. Example (2,2)→(8,5): Steps=6, Xinc=1, Yinc=0.5. Simple but uses floating point and rounding.`],
+["t4",10,"U1","Explain Bresenham line algorithm with example.",`p0=2dy−dx. p&lt;0: next (x+1,y), p+=2dy. p≥0: next (x+1,y+1), p+=2dy−2dx. Example (2,2)→(8,5): points (3,3),(4,3),(5,4),(6,4),(7,5),(8,5). Integer only, fast.`],
+["t5",10,"U1","Explain midpoint circle algorithm.",`Start (0,r), p=1−r. Plot 8 symmetric points. p&lt;0: x++, p+=2x+1; else x++, y−−, p+=2x−2y+1. Stop when x≥y. Example r=5 gives (1,5),(2,5),(3,4),(4,3).`],
+["t6",10,"U1","Explain midpoint ellipse algorithm.",`Equation x²/rx²+y²/ry²=1; 4-way symmetry; Region 1 (slope&lt;1) starts at (0,ry) with p1=ry²−rx²ry+¼rx²; Region 2 (slope&gt;1) uses p2. Use decision parameter to pick next pixel and plot 4 points.`],
+["t7",10,"U2","Input devices and image scanners.",`Keyboard (text), mouse (pointing), joystick, trackball, light pen, touch screen, digitizer. <b>Scanner:</b> light source + CCD sensor + ADC converts paper to digital; types: flatbed, handheld, sheet-fed, drum; resolution in dpi.`],
+["t8",10,"U2","Dreamweaver and 3D effects.",`<b>Dreamweaver:</b> Adobe web design tool with code and design view, live preview, HTML/CSS editing, responsive layouts. <b>3D effects:</b> modelling, lighting, shading, texturing, rendering, perspective, shadows.`],
+["t9",10,"U3","Window-to-viewport transformation.",`Sx=(xvmax−xvmin)/(xwmax−xwmin), Sy=(yvmax−yvmin)/(ywmax−ywmin). xv=xvmin+(xw−xwmin)Sx, yv=yvmin+(yw−ywmin)Sy.<br>Example: window (0,0)-(10,10) to viewport (0,0)-(100,100): (5,5) → (50,50).`],
+["t10",10,"U3","Composite 2D transformations.",`Combine matrices by multiplication M=M3×M2×M1. Order matters. Rotation about a point: translate to origin, rotate, translate back. Scaling about a fixed point works the same way.`],
+["t11",10,"U4","Surface of revolution and sweep surface.",`Revolution: a 2D curve rotated about an axis gives vase, bottle, bowl. Sweep: a curve moved along a path gives pipe or tube. Both are parametric surfaces.`],
+["t12",10,"U4","Polygon mesh vs wireframe.",`<table><tr><th></th><th>Mesh</th><th>Wireframe</th></tr><tr><td>Parts</td><td>Vertices, edges, faces</td><td>Vertices, edges</td></tr><tr><td>Surface info</td><td>Yes</td><td>No</td></tr><tr><td>Hidden lines</td><td>Removable</td><td>Visible, ambiguous</td></tr></table>`],
+["t13",10,"U5","Convergence of computer, communication and entertainment.",`Merging of these technologies into one device or service. Example: smartphone (camera, player, phone, internet). Also smart TV, online video, games. Benefits: one device, lower cost, easy sharing.`],
+["t14",10,"U5","MIDI vs digital audio.",`<table><tr><th>MIDI</th><th>Digital audio</th></tr><tr><td>Stores commands</td><td>Stores sound samples</td></tr><tr><td>Very small</td><td>Large</td></tr><tr><td>Cannot record voice</td><td>Can record voice</td></tr><tr><td>Edited easily</td><td>Harder to edit notes</td></tr></table>`],
+["f1",5,"U1","Define computer graphics.",`Creating, editing and displaying pictures and animations using a computer.`],
+["f2",5,"U1","What is a pixel?",`Picture element, the smallest unit of a display.`],
+["f3",5,"U1","What is a frame buffer?",`Memory that stores the colour of every pixel on the screen.`],
+["f4",5,"U1","What is scan conversion?",`Converting shapes such as lines and circles into pixels on a raster screen.`],
+["f5",5,"U1","What is aliasing?",`Jagged staircase look of slanted lines due to limited resolution.`],
+["f6",5,"U2","What is a video controller?",`Hardware that reads the frame buffer and sends signals and sync pulses to the monitor.`],
+["f7",5,"U2","What is a display list?",`List of drawing commands stored for a random-scan display.`],
+["f8",5,"U2","What is a scanner?",`Input device that converts paper images into digital files.`],
+["f9",5,"U2","What is Dreamweaver?",`Adobe software for designing and developing websites.`],
+["f10",5,"U3","What is clipping?",`Removing the parts of a picture outside the window.`],
+["f11",5,"U3","Write the Cohen-Sutherland region code.",`4 bits TBRL: Top, Bottom, Right, Left. 1 means outside on that side.`],
+["f12",5,"U3","Define translation and scaling.",`Translation moves an object: x'=x+tx, y'=y+ty. Scaling changes size: x'=x·sx, y'=y·sy.`],
+["f13",5,"U3","Define rotation, reflection, shearing.",`Rotation turns by angle θ. Reflection makes a mirror image. Shearing slants the object along an axis.`],
+["f14",5,"U3","What are homogeneous coordinates?",`Writing (x,y) as (x,y,1) so all transformations become matrices.`],
+["f15",5,"U3","What is a viewport?",`Screen area where the selected window content is displayed.`],
+["f16",5,"U4","What is a Bezier curve?",`A curve defined by control points; starts at first and ends at last point.`],
+["f17",5,"U4","What is a B-spline?",`Curve with local control and chosen degree, made from control points and basis functions.`],
+["f18",5,"U4","What is a parametric curve?",`Curve where x and y depend on a parameter t.`],
+["f19",5,"U4","What is a polygon mesh?",`3D object made of vertices, edges and faces.`],
+["f20",5,"U5","Define multimedia.",`Combination of text, graphics, audio, video and animation.`],
+["f21",5,"U5","What is MIDI?",`Standard for sending musical instructions between instruments and computers.`],
+["f22",5,"U5","What are sampling and quantization?",`Sampling measures a sound wave at regular intervals. Quantization rounds each sample to a fixed level.`],
+["f23",5,"U5","Name audio file formats.",`WAV, MP3, AAC, FLAC, MIDI.`],
+["f24",5,"U5","What is an authoring tool?",`Software for building multimedia applications, e.g. Authorware, Director, ToolBook.`]
+];
+const M=Object.fromEntries(QA.map(x=>[x[0],x]));
+const P=[
+["Paper 1 · Classic",["f4","f1","f20","f12","f21"],["t3","t4","t9"],["g1","g4","g11"]],
+["Paper 2 · Numerical focus",["f10","f14","f2","f13","f22"],["t4","t5","t9"],["g2","g5","g6"]],
+["Paper 3 · Theory focus",["f3","f7","f16","f19","f23"],["t1","t12","t14"],["g1","g8","g9"]],
+["Paper 4 · Graphics heavy",["f5","f11","f15","f17","f18"],["t5","t10","t11"],["g3","g6","g7"]],
+["Paper 5 · Multimedia heavy",["f6","f8","f21","f24","f20"],["t13","t14","t7"],["g9","g10","g11"]]
+];
+const N=[
+["Unit 1 · Introduction & scan conversion","Computer graphics creates pictures with a computer. <b>Interactive</b> graphics lets the user change the picture in real time. Hardware: input, processing, output, storage. Framework: application model, application program, graphics system. <b>Scan conversion</b> turns lines, circles, ellipses into pixels: DDA, Bresenham (p0=2dy−dx), midpoint circle (p0=1−r, 8-way symmetry), midpoint ellipse (2 regions, 4-way symmetry)."],
+["Unit 2 · Display technologies","<b>Raster scan:</b> pixels, frame buffer, refresh, video controller. <b>Random scan:</b> lines, display list, display processor. Input devices: keyboard, mouse, joystick, light pen, touch screen. Image scanners use a CCD sensor. Dreamweaver builds web pages. 3D effects: modelling, lighting, shading, texturing, rendering."],
+["Unit 3 · Clipping & transformations","Clipping removes outside parts (Cohen-Sutherland codes TBRL). 2D transformations: translation, scaling, rotation, reflection, shear. Homogeneous coordinates (x,y,1) give 3×3 matrices. Composite = matrix product, order matters. Window→viewport uses Sx, Sy scale and translation."],
+["Unit 4 · Curves & surfaces","Parametric curves use t, non-parametric use y=f(x). Cubic spline passes through points. Bezier: control points, global control, convex hull. B-spline: local control, chosen degree. Surfaces: parametric P(u,v), revolution, sweep, quadric, bilinear, Bezier/B-spline, generalized cylinder and cone. Polygon mesh (faces) vs wireframe (edges)."],
+["Unit 5 · Multimedia","Multimedia = text, graphics, audio, video, animation. Convergence of computer, communication, entertainment. Hardware, storage and communication devices. Software, presentation tools, authoring tools (card, page, icon, time based). Building blocks: text, sound, MIDI, digital audio (sampling, quantization, encoding), formats WAV MP3 AAC FLAC MID, audio and video capture."]
+];
+const F=`<table><tr><th>Topic</th><th>Formula</th></tr><tr><td>DDA</td><td>Steps=max(|dx|,|dy|); Xinc=dx/Steps; Yinc=dy/Steps</td></tr><tr><td>Bresenham</td><td>p0=2dy−dx; p&lt;0: p+=2dy; else p+=2dy−2dx</td></tr><tr><td>Midpoint circle</td><td>p0=1−r; p&lt;0: p+=2x+1; else p+=2x−2y+1</td></tr><tr><td>Translation</td><td>x'=x+tx; y'=y+ty</td></tr><tr><td>Scaling</td><td>x'=x·sx; y'=y·sy</td></tr><tr><td>Rotation</td><td>x'=x cosθ−y sinθ; y'=x sinθ+y cosθ</td></tr><tr><td>Window→viewport</td><td>xv=xvmin+(xw−xwmin)·Sx</td></tr><tr><td>Cubic Bezier</td><td>(1−t)³P0+3t(1−t)²P1+3t²(1−t)P2+t³P3</td></tr><tr><td>Audio size</td><td>rate × bits × channels × seconds</td></tr></table>`;
+const v=document.getElementById('v'),q=document.getElementById('q');
+let tab='qa',flt='all',unit='all',done={};
+try{done=JSON.parse(localStorage.getItem('mmgdone')||'{}')}catch(e){}
+function save(){try{localStorage.setItem('mmgdone',JSON.stringify(done))}catch(e){}}
+function item(x,i){return `<details class="${done[x[0]]?'done':''}" data-id="${x[0]}"><summary><span class="m">${x[1]}</span><span>${x[3]}</span></summary><div class="b">${x[4]}<p><button class="chip" onclick="mark('${x[0]}')">${done[x[0]]?'✓ Done':'Mark as done'}</button></p></div></details>`}
+function mark(id){done[id]=!done[id];save();render()}
+function chips(a,cur,fn){return `<div class="chips">${a.map(c=>`<button class="chip ${c[0]==cur?'on':''}" onclick="${fn}('${c[0]}')">${c[1]}</button>`).join('')}</div>`}
+function setF(x){flt=x;render()}function setU(x){unit=x;render()}
+function render(){
+ const s=q.value.trim().toLowerCase();let h='';
+ q.style.display=(tab=='qa'||tab=='notes')?'':'none';
+ if(tab=='qa'){
+  h+=chips([['all','All'],['15','15 marks'],['10','10 marks'],['5','5 marks']],flt,'setF');
+  h+=chips([['all','All units'],['U1','Unit 1'],['U2','Unit 2'],['U3','Unit 3'],['U4','Unit 4'],['U5','Unit 5']],unit,'setU');
+  const L=QA.filter(x=>(flt=='all'||x[1]==flt)&&(unit=='all'||x[2]==unit)&&(!s||(x[3]+x[4]).toLowerCase().includes(s)));
+  const d=QA.filter(x=>done[x[0]]).length;
+  h+=`<div class="note">${L.length} questions shown · ${d}/${QA.length} done</div>`+(L.map(item).join('')||'<p>No match.</p>');
+ }else if(tab=='notes'){
+  h+=N.filter(n=>!s||(n[0]+n[1]).toLowerCase().includes(s)).map(n=>`<details open><summary>${n[0]}</summary><div class="b">${n[1]}</div></details>`).join('');
+ }else if(tab=='papers'){
+  h+=`<div class="note">5 practice papers, 75 marks each (2 hours). Section A: attempt all 5 × 5 = 25. Section B: any 2 of 3 × 10 = 20. Section C: any 2 of 3 × 15 = 30. Tap a question to see its answer. Practice pattern, not the official paper.</div>`;
+  h+=P.map(p=>`<details><summary>📝 ${p[0]}</summary><div class="b"><h2>Section A · 5 × 5</h2>${p[1].map(i=>item(M[i])).join('')}<h2>Section B · any 2 × 10</h2>${p[2].map(i=>item(M[i])).join('')}<h2>Section C · any 2 × 15</h2>${p[3].map(i=>item(M[i])).join('')}</div></details>`).join('');
+ }else{h+=`<h2>Important formulas</h2>`+F+`<h2>Exam writing tips</h2><ul><li>5 marks: definition, 4–5 points, one example.</li><li>10 marks: definition, steps, diagram.</li><li>15 marks: introduction, explanation, formulas, labelled diagram, conclusion.</li><li>Numericals: write formula, every step, final answer.</li><li>Draw: Cohen-Sutherland grid, raster block diagram, Bezier curve, rotation steps.</li></ul>`}
+ v.innerHTML=h;
+}
+const T=[['qa','❓','Q&A'],['notes','📖','Notes'],['papers','📝','Papers'],['f','∑','Formulas']];
+document.getElementById('nav').innerHTML=T.map(t=>`<button data-t="${t[0]}"><span>${t[1]}</span>${t[2]}</button>`).join('');
+document.getElementById('nav').onclick=e=>{const b=e.target.closest('button');if(!b)return;tab=b.dataset.t;sync();render();scrollTo(0,0)};
+function sync(){document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.t==tab))}
+q.oninput=render;sync();render();
+</script></body></html>
